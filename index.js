@@ -8,6 +8,8 @@ const vueDataTag = require('./lib/tags/vue-data');
 const vuePropTag = require('./lib/tags/vue-prop');
 const vueComputedTag = require('./lib/tags/vue-computed');
 const vueEventTag = require('./lib/tags/vue-event');
+const vueMethodTag = require('./lib/tags/vue-method');
+const vueSlotTag = require('./lib/tags/vue-slot');
 
 // Used to compute good line number for Vue methods
 const exportDefaultLines = {};
@@ -35,7 +37,7 @@ exports.handlers = {
       e.doclet.kind = 'module';
       e.doclet.name = componentName;
       e.doclet.alias = componentName;
-      e.doclet.longname = `module:${componentName}`;
+      e.doclet.longname = `Component:${componentName}`;
     }
 
     if (
@@ -54,6 +56,8 @@ exports.handlers = {
         data: e.doclet._vueData || [],
         computed: e.doclet._vueComputed || [],
         event: e.doclet._vueEvent || [],
+        method: e.doclet._vueMethod || [],
+        slot: e.doclet._vueSlot || [],
       };
 
       render(template, data, (err, str) => {
@@ -86,4 +90,6 @@ exports.defineTags = function defineTags(dictionary) {
   dictionary.defineTag(vuePropTag.name, vuePropTag.options);
   dictionary.defineTag(vueComputedTag.name, vueComputedTag.options);
   dictionary.defineTag(vueEventTag.name, vueEventTag.options);
+  dictionary.defineTag(vueMethodTag.name, vueMethodTag.options);
+  dictionary.defineTag(vueSlotTag.name, vueSlotTag.options);
 };
